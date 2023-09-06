@@ -1,18 +1,28 @@
 package com.example.adhip91sqft.models
 
-import com.google.gson.annotations.SerializedName
-
 data class Data(
-    @SerializedName("id"            ) var id           : String?           = null,
-    @SerializedName("name"          ) var name         : String?           = null,
-    @SerializedName("type"          ) var type         : String?           = null,
-    @SerializedName("section"       ) var section      : String?           = null,
-    @SerializedName("tags"          ) var tags         : ArrayList<String> = arrayListOf(),
-    @SerializedName("file"          ) var file         : String?           = null,
-    @SerializedName("version"       ) var version      : Int?              = null,
-    @SerializedName("status"        ) var status       : Int?              = null,
-    @SerializedName("comment_count" ) var commentCount : Int?              = null,
-    @SerializedName("uploaded_at"   ) var uploadedAt   : String?           = null,
-    @SerializedName("uploaded_by"   ) var uploadedBy   : UploadedBy?       = UploadedBy(),
-    @SerializedName("file_size"     ) var fileSize     : Double?           = null
+    val comment_count: Int,
+    val file: String,
+    val file_size: Double,
+    val id: String,
+    val name: String,
+    val section: String,
+    val status: Int,
+    val tags: List<Tag>,
+    val type: String,
+    val uploaded_at: String,
+    val uploaded_by: UploadedBy,
+    val version: Int
+)
+
+data class UploadedBy(
+    val id: String,
+    val name: String,
+    val organization_name: String,
+    val photo: String
+)
+
+data class Tag(
+    val id: String,
+    val name: String
 )

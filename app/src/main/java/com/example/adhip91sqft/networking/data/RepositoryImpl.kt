@@ -1,6 +1,8 @@
-package com.example.adhip91sqft
+package com.example.adhip91sqft.networking.data
 
 import com.example.adhip91sqft.models.ApiResponse
+import com.example.adhip91sqft.networking.domain.Repository
+import com.example.adhip91sqft.utils.Result
 import com.example.adhip91sqft.networking.ApiService
 import com.example.adhip91sqft.networking.Retrofit
 import kotlinx.coroutines.flow.Flow
@@ -18,8 +20,10 @@ class RepositoryImpl @Inject constructor(
         return flow {
             emit(Result.Loading(true))
             val response = userApi.getData()
-            if(response.success == true) {
+            if(response.success) {
                 emit(Result.Success(response))
+            } else {
+                emit(Result.Failed(response.errors, response.message ?: "Something went wrong"))
             }
         }
     }

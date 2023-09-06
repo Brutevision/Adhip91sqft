@@ -1,8 +1,10 @@
 package com.example.adhip91sqft
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -27,13 +29,21 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.Observer
 import com.example.adhip91sqft.ui.theme.Adhip91sqftTheme
+import com.example.adhip91sqft.viewModel.ViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
 data class ListItem(val icon: ImageVector, val text1: String, val text2: String)
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+
+    private val viewModel : ViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        callApi()
+        observeLiveData()
         setContent {
             Adhip91sqftTheme {
                 // A surface container using the 'background' color from the theme
@@ -48,6 +58,16 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
+    }
+
+    private fun observeLiveData(){
+        viewModel.liveData().observe(this, Observer {
+            Log.i("test", it.data[0].name)
+        })
+    }
+
+    private fun callApi(){
+        viewModel.getData()
     }
 }
 
